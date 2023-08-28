@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MIUI隐藏小白条</string>
+    <string name="app_xposed_description">如果你刷了各种隐藏小白条的magisk模块，隐藏的效果很好，但是屏幕底部还是有一块区域无法点击，可以试试此模块</string>
+    <string-array name="xposed_scope">
+        <item>com.miui.home</item>
+    </string-array>
+</resources>
