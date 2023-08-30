@@ -26,7 +26,6 @@ public class HookInit implements IXposedHookLoadPackage {
     private boolean isLandScapeActually;
     private Context context;
 
-
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) {
         try {
