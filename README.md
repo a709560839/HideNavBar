@@ -1,7 +1,7 @@
 # MIUI隐藏小白条 HideNavBar
 
 [![License](https://img.shields.io/badge/License%20-GPLv3.0%20-337ab7.svg)](https://www.gnu.org/licenses/gpl-3.0.html#license-text)
-[![Download](https://img.shields.io/badge/下载%20-Release%20-5ce500.svg)](https://github.com/a709560839/HideNavBar/releases/tag/v1.0)
+[![Download](https://img.shields.io/badge/下载%20-Release%20-5ce500.svg)](https://github.com/a709560839/HideNavBar/releases)
 
 # 如何使用：
 1. 直接安装，没有图标。
