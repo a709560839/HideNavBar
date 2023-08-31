@@ -4,6 +4,7 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookConstructor;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -20,6 +21,7 @@ public class HookInit implements IXposedHookLoadPackage {
     public static int DISABLE_EXPAND = -1;
     private boolean mHideGestureLine;
     private boolean sIsNeedInjectMotionEvent;
+    private boolean hasSIsNeedInjectMotionEvent = true;
     private MotionEvent motionEvent;
     private int mTopMargin;
     private int mCurrentTopMargin;
@@ -40,10 +42,24 @@ public class HookInit implements IXposedHookLoadPackage {
                             @Override
                             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                                 super.beforeHookedMethod(param);
-                                sIsNeedInjectMotionEvent = XposedHelpers.getBooleanField(param.thisObject, "sIsNeedInjectMotionEvent");
+                                if (hasSIsNeedInjectMotionEvent)
+                                    try {
+                                        //旧版系统桌面用sIsNeedInjectMotionEvent判断是否点击
+                                        sIsNeedInjectMotionEvent = XposedHelpers.getBooleanField(param.thisObject, "sIsNeedInjectMotionEvent");
+                                    } catch (Throwable throwable) {
+                                        hasSIsNeedInjectMotionEvent = false;
+                                        PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                                        XposedBridge.log("MIUI隐藏小白条/MIUI HideNavBar:没有sIsNeedInjectMotionEvent，当前系统桌面版本——" + packageInfo.versionName);
+                                    }
+
+                                //新版系统桌面用mHideGestureLine判断是否点击
+                                mHideGestureLine = XposedHelpers.getBooleanField(param.thisObject, "mHideGestureLine");
+
                                 motionEvent = (MotionEvent) XposedHelpers.getObjectField(param.thisObject, "mDownEvent");
                                 if ((motionEvent.getFlags() & DISABLE_EXPAND) == 0) {
-                                    XposedHelpers.setBooleanField(param.thisObject, "sIsNeedInjectMotionEvent", true);
+                                    XposedHelpers.setBooleanField(param.thisObject, "mHideGestureLine", false);
+                                    if (hasSIsNeedInjectMotionEvent)
+                                        XposedHelpers.setBooleanField(param.thisObject, "sIsNeedInjectMotionEvent", true);
                                 }
                             }
 
@@ -51,7 +67,9 @@ public class HookInit implements IXposedHookLoadPackage {
                             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                                 super.afterHookedMethod(param);
                                 if ((motionEvent.getFlags() & DISABLE_EXPAND) == 0) {
-                                    XposedHelpers.setBooleanField(param.thisObject, "sIsNeedInjectMotionEvent", sIsNeedInjectMotionEvent);
+                                    XposedHelpers.setBooleanField(param.thisObject, "mHideGestureLine", mHideGestureLine);
+                                    if (hasSIsNeedInjectMotionEvent)
+                                        XposedHelpers.setBooleanField(param.thisObject, "sIsNeedInjectMotionEvent", sIsNeedInjectMotionEvent);
                                 }
                             }
                         });
