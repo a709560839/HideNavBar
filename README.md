@@ -3,6 +3,8 @@
 [![License](https://img.shields.io/badge/License%20-GPLv3.0%20-337ab7.svg)](https://www.gnu.org/licenses/gpl-3.0.html#license-text)
 [![Download](https://img.shields.io/badge/下载%20-Release%20-5ce500.svg)](https://github.com/a709560839/HideNavBar/releases)
 
+# [酷安原帖](https://www.coolapk.com/feed/48910157?shareKey=N2Q3ZjFlYjM4N2YwNjRmYWRhMzU~)
+
 # 如何使用：
 1. 直接安装，没有图标。
 2. Lsposed启用作用域：系统桌面。重启系统桌面(chimi，西米露 都可以重启系统桌面，我这没界面就不搞了，都没有就MT管理器用终端root命令: am force-stop com.miui.home)。
