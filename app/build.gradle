@@ -1,17 +1,17 @@
 plugins {
-    id 'com.android.application'
+    alias(libs.plugins.android.application)
 }
 
 android {
     namespace 'com.jj.hidenavbar'
-    compileSdk 34
+    compileSdk 37
 
     defaultConfig {
         applicationId "com.jj.hidenavbar"
-        minSdk 24
-        targetSdk 34
-        versionCode 3
-        versionName "1.2"
+        minSdk 26
+        targetSdk 37
+        versionCode 20000
+        versionName "2.0.0"
     }
 
     buildTypes {
@@ -20,11 +20,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 dependencies {
-    compileOnly fileTree(include: ['*ar'], dir:'libs')
+    compileOnly(libs.libxposed.api)
 }
